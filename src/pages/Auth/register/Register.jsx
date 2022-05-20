@@ -1,20 +1,18 @@
 import { useState, useEffect } from "react";
 import { Input } from "../../../components/Input";
-import { Select } from "../../../components/Select";
 
 import { useSelector, useDispatch } from "react-redux";
 import { register, reset } from "../../../features/authSlice";
 
 import styles from "./Register.module.css";
+import toast from "react-hot-toast";
+
+import { Link, useNavigate } from "react-router-dom";
+import Loading from "../../../components/Loading";
 
 function Register() {
-  const opts = [
-    { value: "safi1", label: "Safi - 1" },
-    { value: "safi2", label: "Safi - 2" },
-    { value: "safi3", label: "Safi - 3" },
-  ];
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     fname: "",
@@ -34,6 +32,22 @@ function Register() {
     }));
   };
 
+  const { user, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isSuccess || user) {
+      dispatch(reset());
+      navigate("/secret");
+    }
+
+    if (isError) {
+      dispatch(reset());
+      toast.error(message);
+    }
+  }, [user, isError, isSuccess, message, isLoading, navigate, dispatch]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(register(formData));
@@ -41,6 +55,7 @@ function Register() {
 
   return (
     <div className="w-10/12 max-w-x mx-auto mb-4">
+      {isLoading ? <Loading /> : null}
       <h2 className="my-7 font-bold text-darken text-2xl">Créer un compte</h2>
       <div className="flex border rounded-lg overflow-hidden bg-white">
         <form onSubmit={onSubmit} className="flex-1 p-4 md:p-6 lg:p-7">
@@ -116,9 +131,9 @@ function Register() {
               className="appearance-none border border-slate-300 p-2 rounded-md"
             />
             <p className="text-base">
-              <a className="underline ml-2 font-light" href="#">
+              <Link to="/" className="underline ml-2 font-light">
                 Agree to our term of use
-              </a>
+              </Link>
             </p>
           </div>
           <div className="flex justify-end mt-5">
@@ -127,14 +142,12 @@ function Register() {
             </button>
           </div>
           <p className="text-base text-center mt-6">
-            <a className="underline ml-2 font-light" href="#">
-              Vous avis déjà un compte? se connecter
-            </a>
+            <Link to="/login" className="underline ml-2 font-light">
+              Vous avez déjà un compte? se connecter
+            </Link>
           </p>
         </form>
-        <div className={`flex-1 hidden lg:block ${styles.left}`}>
-          {/* <img className="w-full" src={sideImage} alt="call center" /> */}
-        </div>
+        <div className={`flex-1 hidden lg:block ${styles.left}`}></div>
       </div>
     </div>
   );

@@ -1,16 +1,24 @@
 import { NavBar } from "./components/NavBar";
 import Container from "./components/Container";
 import Register from "./pages/Auth/register/Register";
+import Login from "./pages/Auth/login/Login";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Secret from "./pages/services/Secret";
+import { Toaster } from "react-hot-toast";
 
 function App() {
-  
   return (
-    <>
+    <BrowserRouter>
+      <Toaster />
       <NavBar />
       <Container>
-        <Register />
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/secret" element={<Secret />} />
+        </Routes>
       </Container>
-    </>
+    </BrowserRouter>
   );
 }
 

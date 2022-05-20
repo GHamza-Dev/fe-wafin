@@ -1,4 +1,5 @@
-import React from "react";
+import { Routes, Link } from "react-router-dom";
+
 export function NavBar() {
   return (
     <div className="bg-white flex justify-between items-center shadow-sm h-14 px-7 mx-auto">
@@ -11,9 +12,12 @@ export function NavBar() {
       <nav>
         <ul className="flex justify-center items-center">
           <li>
-            <a className="mx-4 text-grayish hover:text-darken hover:cursor-pointer">
+            <Link
+              to="/"
+              className="mx-4 text-grayish hover:text-darken hover:cursor-pointer"
+            >
               Vondeur
-            </a>
+            </Link>
           </li>
           <li>
             <a className="mx-4 text-grayish hover:text-darken hover:cursor-pointer">
@@ -31,8 +35,11 @@ export function NavBar() {
             </a>
           </li>
           <li>
-            <button className="btn-primary">Se connecter</button>
+            <Link to="/register">
+              <button className="btn-primary">Se connecter</button>
+            </Link>
           </li>
+          <li></li>
         </ul>
       </nav>
     </div>

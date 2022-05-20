@@ -4,6 +4,7 @@ export function Input({
   type,
   name,
   value,
+  required,
   onChange,
   holder,
   classes,
@@ -22,6 +23,7 @@ export function Input({
         id={id}
         placeholder={holder}
         autoComplete="true"
+        required={required}
       />
     </div>
   );
