@@ -9,6 +9,7 @@ module.exports = {
         lightgray: "#E3E3E3",
         lighten: "#FBFCFF",
         light: "#FFFDFD",
+        blue: "#2E6BFF",
       },
       boxShadow: {
         "3xl": "0 35px 60px -15px rgba(0, 0, 0, 0.3)",

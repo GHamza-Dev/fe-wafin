@@ -81,6 +81,9 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.user = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
       });
   },
 });
