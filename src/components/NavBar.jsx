@@ -17,6 +17,7 @@ export function NavBar() {
 
   const toggleNavBar = () => {
     setNavBar((prevState) => !prevState);
+    setDropDown(() => true);
   };
 
   return (
