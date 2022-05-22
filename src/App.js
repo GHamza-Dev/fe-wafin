@@ -13,6 +13,7 @@ function App() {
       <NavBar />
       <Container>
         <Routes>
+          <Route path="/" element={<div>Abs path /</div>} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/secret" element={<Secret />} />
