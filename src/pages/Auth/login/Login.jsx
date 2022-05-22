@@ -56,7 +56,7 @@ function Register() {
           <div>
             <p className="font-segoeui text-2xl text-grayish">Bonjour</p>
             <h3 className="text-3xl text-darken font-semibold my-2">
-              Bienvenue à Wa <span className="text-primary">fin</span>
+              Bienvenue à Wa<span className="text-primary">fin</span>
             </h3>
             <p className="font-light text-grayish">
               Entrez vos identifiants ci-dessous
