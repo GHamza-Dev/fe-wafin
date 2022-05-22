@@ -4,6 +4,7 @@ import { IoLogOut } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export function NavDropDown({ userName, hidden }) {
   const dispatch = useDispatch();
@@ -19,10 +20,13 @@ export function NavDropDown({ userName, hidden }) {
         hidden && "hidden"
       } z-10 absolute right-0 h idden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}
     >
-      <a className="flex items-center just px-4 py-3 text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+      <Link
+        to="/profile"
+        className="flex items-center just px-4 py-3 text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+      >
         <FaUserCog size={22} />
         <div className="font-medium truncate ml-1">{userName}</div>
-      </a>
+      </Link>
       <ul
         className="py-1 text-sm text-gray-700 dark:text-gray-200"
         aria-labelledby="dropdownSmallButton"
