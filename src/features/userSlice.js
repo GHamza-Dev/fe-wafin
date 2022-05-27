@@ -35,6 +35,20 @@ export const updateClient = createAsyncThunk(
   }
 );
 
+export const updateProvider = createAsyncThunk(
+  "provider/update",
+  async (provider, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      console.log(provider.id);
+      return await userService.editProvider(provider, token);
+    } catch ({ response }) {
+      const { message } = response.data;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const registerProvider = createAsyncThunk(
   "provider/register",
   async (provider, thunkAPI) => {
@@ -115,6 +129,19 @@ export const userSlice = createSlice({
       .addCase(getProvider.fulfilled, (state, action) => {
         state.isLoading = false;
         state.provider = action.payload;
+      })
+      .addCase(updateProvider.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProvider.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.client = action.payload;
+      })
+      .addCase(updateProvider.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.client = null;
       });
   },
 });

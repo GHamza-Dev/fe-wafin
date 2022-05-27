@@ -5,11 +5,12 @@ import { Select } from "../../components/Select";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getClient,
-  updateClient,
   reset,
-  registerProvider,
+  getClient,
   getProvider,
+  updateClient,
+  updateProvider,
+  registerProvider,
 } from "../../features/userSlice";
 
 import { BiImageAdd } from "react-icons/bi";
@@ -32,14 +33,17 @@ function UpdateAccount() {
 
   useEffect(() => {
     dispatch(getClient());
-    dispatch(getProvider());
+
+    if (role === "provider") {
+      dispatch(getProvider());
+    }
 
     if (message) {
       if (isError) toast.error(message);
       else toast.success(message);
     }
     dispatch(reset());
-  }, [message, isError, dispatch]);
+  }, [message, isError, role, dispatch]);
 
   let [nic, setNic] = useState(client?.nic);
   let [fname, setFname] = useState(client?.first_name);
@@ -54,6 +58,7 @@ function UpdateAccount() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     dispatch(
       updateClient({
         fname: fname,
@@ -63,14 +68,29 @@ function UpdateAccount() {
         nic: nic,
       })
     );
-    dispatch(
-      registerProvider({
-        profession: profession,
-        zipcode: zipcode,
-        address: address,
-        bio: bio,
-      })
-    );
+
+    if (role === "provider") {
+      dispatch(
+        updateProvider({
+          id: provider.provider_id,
+          profession: profession,
+          zipcode: zipcode,
+          address: address,
+          bio: bio,
+        })
+      );
+    }
+
+    if (role !== "provider") {
+      dispatch(
+        registerProvider({
+          profession: profession,
+          zipcode: zipcode,
+          address: address,
+          bio: bio,
+        })
+      );
+    }
   };
 
   return (
