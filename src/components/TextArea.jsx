@@ -2,7 +2,6 @@ import React from "react";
 export function TextArea({
   label,
   id,
-  type,
   name,
   value,
   required,
@@ -23,6 +22,8 @@ export function TextArea({
         cols="30"
         rows="5"
         placeholder={holder}
+        value={value}
+        onChange={onChange}
       ></textarea>
     </div>
   );

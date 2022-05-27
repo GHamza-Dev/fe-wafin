@@ -28,7 +28,6 @@ const login = async (credentials) => {
     localStorage.setItem("user", JSON.stringify(response.data.data));
   }
 
-  console.log(response.data.data);
   return response.data.data;
 };
 

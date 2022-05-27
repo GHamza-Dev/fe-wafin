@@ -4,9 +4,16 @@ import { Input } from "../../components/Input";
 import { Select } from "../../components/Select";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getClient, updateClient } from "../../features/userSlice";
+import {
+  getClient,
+  updateClient,
+  reset,
+  registerProvider,
+  getProvider,
+} from "../../features/userSlice";
 
 import { BiImageAdd } from "react-icons/bi";
+import toast from "react-hot-toast";
 
 function UpdateAccount() {
   const dispatch = useDispatch();
@@ -18,24 +25,32 @@ function UpdateAccount() {
     { value: "safi3", label: "Safi - 3" },
   ];
 
-  let client = useSelector((state) => state.user.client);
+  let { isError, message } = useSelector((state) => state.user);
   let role = useSelector((state) => state.auth.user.role);
+  let client = useSelector((state) => state.user.client);
+  let provider = useSelector((state) => state.user.provider);
 
   useEffect(() => {
     dispatch(getClient());
-  }, [dispatch]);
+    dispatch(getProvider());
+
+    if (message) {
+      if (isError) toast.error(message);
+      else toast.success(message);
+    }
+    dispatch(reset());
+  }, [message, isError, dispatch]);
 
   let [nic, setNic] = useState(client?.nic);
   let [fname, setFname] = useState(client?.first_name);
   let [lname, setLname] = useState(client?.last_name);
   let [phone, setPhone] = useState(client?.phone);
   let [email, setEmail] = useState(client?.email);
-
-  let [profession, setProfession] = useState("");
-  let [zipcode, setZipcode] = useState("");
-  let [address, setAddress] = useState("");
-  let [bio, setBio] = useState("");
-  let [image, setImage] = useState("");
+  let [profession, setProfession] = useState(provider?.profession);
+  let [zipcode, setZipcode] = useState(provider?.zipcode);
+  let [address, setAddress] = useState(provider?.address);
+  let [bio, setBio] = useState(provider?.bio);
+  let [image, setImage] = useState(provider?.image);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -46,6 +61,14 @@ function UpdateAccount() {
         email: email,
         phone: phone,
         nic: nic,
+      })
+    );
+    dispatch(
+      registerProvider({
+        profession: profession,
+        zipcode: zipcode,
+        address: address,
+        bio: bio,
       })
     );
   };
@@ -125,6 +148,9 @@ function UpdateAccount() {
             name="phone"
             required={true}
           />
+          <div className="my-5 mt-7 h-2 bg-slate-200 rounded-lg relative">
+            <div className="absolute w-5 h-5 rounded-full -translate-x-1/2 left-1/2 top-1/2 -translate-y-1/2 bg-slate-400"></div>
+          </div>
           {/* row */}
           <div className="flex gap-x-3 flex-col md:flex-row">
             <Select label="Vile" id="city" opts={opts} required={true} />

@@ -16,6 +16,21 @@ const getClient = async (id, token) => {
   return response.data.data;
 };
 
+const getProvider = async (id, token) => {
+  let config = {
+    method: "post",
+    url: `${api}/provider/get`,
+    data: JSON.stringify(id),
+    header: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios(config);
+
+  return response.data.data;
+};
+
 const editClient = async (client, token) => {
   let config = {
     method: "post",
@@ -28,12 +43,45 @@ const editClient = async (client, token) => {
 
   const response = await axios(config);
 
-  return response.data.data;
+  return response.data.message;
+};
+
+const editProvider = async (provider, token) => {
+  let config = {
+    method: "post",
+    url: `${api}/provider/edit`,
+    data: JSON.stringify(provider),
+    header: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios(config);
+
+  return response.data.message;
+};
+
+const registerProvider = async (provider, token) => {
+  let config = {
+    method: "post",
+    url: `${api}/provider/register`,
+    data: JSON.stringify(provider),
+    header: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios(config);
+
+  return response.data.message;
 };
 
 const clientService = {
   getClient,
   editClient,
+  editProvider,
+  registerProvider,
+  getProvider,
 };
 
 export default clientService;
