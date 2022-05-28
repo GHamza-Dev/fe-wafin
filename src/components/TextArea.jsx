@@ -15,7 +15,7 @@ export function TextArea({
         {label}
       </label>
       <textarea
-        required
+        required={required}
         className="input"
         name={name}
         id={id}

@@ -2,6 +2,7 @@ import { TextArea } from "../../components/TextArea";
 import { useState, useEffect } from "react";
 import { Input } from "../../components/Input";
 import { Select } from "../../components/Select";
+import Loading from "../../components/Loading";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -26,7 +27,7 @@ function UpdateAccount() {
     { value: "safi3", label: "Safi - 3" },
   ];
 
-  let { isError, message } = useSelector((state) => state.user);
+  let { isError, message, isLoading } = useSelector((state) => state.user);
   let role = useSelector((state) => state.auth.user.role);
   let client = useSelector((state) => state.user.client);
   let provider = useSelector((state) => state.user.provider);
@@ -43,7 +44,7 @@ function UpdateAccount() {
       else toast.success(message);
     }
     dispatch(reset());
-  }, [message, isError, role, dispatch]);
+  }, [message, isError, isLoading, role, dispatch]);
 
   let [nic, setNic] = useState(client?.nic);
   let [fname, setFname] = useState(client?.first_name);
@@ -72,7 +73,6 @@ function UpdateAccount() {
     if (role === "provider") {
       dispatch(
         updateProvider({
-          id: provider.provider_id,
           profession: profession,
           zipcode: zipcode,
           address: address,
@@ -95,6 +95,7 @@ function UpdateAccount() {
 
   return (
     <div className="w-10/12 max-w-x mx-auto mb-4">
+      {isLoading && <Loading />}
       <h2 className="my-7 font-bold text-darken text-2xl">
         {role === "client" ? "Devenir vendeur" : "Mettre à jour le profil"}
       </h2>

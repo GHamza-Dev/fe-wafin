@@ -7,6 +7,7 @@ import Secret from "./pages/services/Secret";
 import { Toaster } from "react-hot-toast";
 import Profile from "./pages/profile/Profile";
 import UpdateAccount from "./pages/profile/UpdateAccount";
+import AddService from "./pages/profile/AddService";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="profile" element={<Profile />}>
             <Route path="update" element={<UpdateAccount />} />
+            <Route path="add-service" element={<AddService />} />
           </Route>
           <Route path="secret" element={<Secret />} />
         </Routes>

@@ -10,19 +10,22 @@ const initialState = {
   message: null,
 };
 
-export const getClient = createAsyncThunk("client/get", async (_, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.user.token,
-      id = { id: thunkAPI.getState().auth.user.id };
-    return await userService.getClient(id, token);
-  } catch ({ response }) {
-    const { message } = response.data;
-    return thunkAPI.rejectWithValue(message);
+export const getClient = createAsyncThunk(
+  "user/get_client",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token,
+        id = { id: thunkAPI.getState().auth.user.id };
+      return await userService.getClient(id, token);
+    } catch ({ response }) {
+      const { message } = response.data;
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
+);
 
 export const updateClient = createAsyncThunk(
-  "client/update",
+  "user/update_client",
   async (client, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -36,11 +39,11 @@ export const updateClient = createAsyncThunk(
 );
 
 export const updateProvider = createAsyncThunk(
-  "provider/update",
+  "user/update_provider",
   async (provider, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      console.log(provider.id);
+      provider.id = thunkAPI.getState().auth.user.id;
       return await userService.editProvider(provider, token);
     } catch ({ response }) {
       const { message } = response.data;
@@ -50,7 +53,7 @@ export const updateProvider = createAsyncThunk(
 );
 
 export const registerProvider = createAsyncThunk(
-  "provider/register",
+  "user/register_provider",
   async (provider, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -64,7 +67,7 @@ export const registerProvider = createAsyncThunk(
 );
 
 export const getProvider = createAsyncThunk(
-  "provider/get",
+  "user/get_provider",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token,

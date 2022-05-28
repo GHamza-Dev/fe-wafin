@@ -21,7 +21,7 @@ function ProfileNav() {
         </li>
         <li>
           <Link
-            to="/"
+            to="add-service"
             className="flex flex-col p-1 items-center justify-evenly h-16 hover:bg-slate-100"
           >
             <span>
