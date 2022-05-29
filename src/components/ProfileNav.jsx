@@ -11,7 +11,7 @@ function ProfileNav() {
       <ul className="flex justify-between border px-3">
         <li>
           <To
-            to="/"
+            to="services"
             className="flex flex-col p-1 items-center justify-evenly h-16 hover:bg-slate-100"
             current="text-blue"
           >
