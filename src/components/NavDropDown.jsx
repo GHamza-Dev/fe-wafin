@@ -32,20 +32,29 @@ export function NavDropDown({ userName, hidden }) {
         aria-labelledby="dropdownSmallButton"
       >
         <li>
-          <a className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+          <Link
+            to="/"
+            className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          >
             <MdSell size={22} />
             <span className="truncate ml-1">Compte vendeur</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+          <Link
+            to="/"
+            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          >
             Mes services
-          </a>
+          </Link>
         </li>
         <li>
-          <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+          <Link
+            to="/"
+            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          >
             Novaux service
-          </a>
+          </Link>
         </li>
       </ul>
       <div className="py-1">
