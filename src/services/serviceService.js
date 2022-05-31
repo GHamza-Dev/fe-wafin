@@ -31,5 +31,19 @@ const getUsersServices = async (provider, token) => {
   else return response.data.data;
 };
 
-const serviceService = { addService, getUsersServices };
+const deleteService = async (id, token) => {
+  let config = {
+    method: "post",
+    url: `${api}/service/delete`,
+    data: JSON.stringify({ service_id: id }),
+    header: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios(config);
+  return response.data.message;
+};
+
+const serviceService = { addService, getUsersServices, deleteService };
 export default serviceService;

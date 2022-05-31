@@ -2,7 +2,7 @@ import { CgPlayListRemove } from "react-icons/cg";
 import { BiEditAlt } from "react-icons/bi";
 import { RiRadioButtonLine } from "react-icons/ri";
 
-const ServiceCard = ({ image, price, text }) => {
+const ServiceCard = ({ image, price, text, onDeleteAttempt }) => {
   return (
     <div className="overflow-hidden shadow-md ring-gray-50  rounded-sm">
       {/* card image */}
@@ -12,7 +12,7 @@ const ServiceCard = ({ image, price, text }) => {
       {/*  card body */}
       <div className="p-4">
         <h3 className="font-bold text-2xl text-blue">{price} Dh</h3>
-        <p className="my-1 line-clamp-3">{text}</p>
+        <p className="my-1 line-clamp-1">{text}</p>
       </div>
       {/* card footer */}
       <div className="flex justify-between items-center px-4 py-2 bg-slate-100">
@@ -24,7 +24,10 @@ const ServiceCard = ({ image, price, text }) => {
           <BiEditAlt size={25} />
           <span>Edit</span>
         </button>
-        <button className="text-red-400 text-sm flex flex-col items-center">
+        <button
+          onClick={onDeleteAttempt}
+          className="text-red-400 text-sm flex flex-col items-center"
+        >
           <CgPlayListRemove size={25} />
           <span>Supprimer</span>
         </button>

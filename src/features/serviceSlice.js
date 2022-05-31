@@ -38,10 +38,30 @@ export const getUsersServices = createAsyncThunk(
   }
 );
 
+export const removeService = createAsyncThunk(
+  "service/remove",
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await serviceService.deleteService(id, token);
+    } catch ({ response }) {
+      const { message } = response.data;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const serviceSlice = createSlice({
   name: "service",
   initialState,
-  reducers: {},
+  reducers: {
+    reset: (state) => {
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.message = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addService.pending, (state) => {
@@ -69,8 +89,22 @@ export const serviceSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(removeService.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(removeService.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.message = action.payload;
+      })
+      .addCase(removeService.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });
 
+export const { reset } = serviceSlice.actions;
 export default serviceSlice.reducer;
