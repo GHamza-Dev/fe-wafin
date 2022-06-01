@@ -7,14 +7,22 @@ import Rating from "../../components/chunks/Rating";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import userService from "../../services/userService";
+import serviceService from "../../services/serviceService";
 import { useSelector } from "react-redux";
 import Loading from "../../components/hoc/Loading";
+import ServiceCard from "../../components/ServiceCard";
+
+import image1 from "../../assets/archetect.jpg";
+import image2 from "../../assets/dantist.jpeg";
+
+const images = [image1, image2];
 
 const Vendor = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const [provider, setProvider] = useState(null);
+  const [services, setServices] = useState(null);
 
   const token = useSelector((state) => state.auth.user);
   const id = location.state.id;
@@ -22,9 +30,12 @@ const Vendor = () => {
   useEffect(() => {
     if (!id) navigate("/vendors");
     userService.getProvider({ id }, token).then((res) => setProvider(res));
+    serviceService
+      .getUsersServices({ provider_id: id }, token)
+      .then((res) => setServices(res));
   }, [navigate, id, token]);
 
-  if (!provider) return <Loading />;
+  if (!provider || !services) return <Loading />; // TODO add placeholders
 
   return (
     <div className="lg:mt-11">
@@ -59,7 +70,7 @@ const Vendor = () => {
           </div>
           {/* contact */}
           <div className="mt-3 flex justify-center">
-            <div className="md:flex md:flex-col">
+            <div className="md:flex md:flex-col justify-center">
               <a
                 href={`tel:${provider.phone}`}
                 className="btn font-normal bg-green-700 rounded-md inline-flex py-3 mr-1 md:m-0 w-32"
@@ -86,6 +97,24 @@ const Vendor = () => {
       <div className="max-w-7xl w-full mx-auto mt-4 bg-slate-100 relative translate-y-64 md:bg-white md:wshadow md:translate-y-0  px-4 py-5">
         <h2 className="font-bold text-darken text-xl">Bio:</h2>
         <p className="mt-3 leading-6">{provider.bio}</p>
+      </div>
+      {/* services */}
+      <div className="max-w-7xl w-full mx-auto mt-4 relative translate-y-64 bg-slate-50 md:wshadow md:translate-y-0  px-4 py-5">
+        <h2 className="font-bold text-darken text-xl">Services</h2>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-4">
+          {services.map((s) => (
+            <ServiceCard
+              key={s.service_id}
+              id={s.service_id}
+              price={`${s.price} Dhs`}
+              title={s.title}
+              image={images[Math.floor(Math.random() * 2)]}
+              desc={s.description}
+              city={s.city}
+              buttonText="Voir plus"
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
