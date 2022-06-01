@@ -8,7 +8,7 @@ import { Input } from "../../components/Input";
 import { Select } from "../../components/Select";
 import { TextArea } from "../../components/TextArea";
 import Button from "../../components/Button";
-import Loading from "../../components/Loading";
+import Loading from "../../components/hoc/Loading";
 
 function AddService() {
   const dispatch = useDispatch();

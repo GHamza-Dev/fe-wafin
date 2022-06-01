@@ -9,6 +9,8 @@ import Profile from "./pages/profile/Profile";
 import UpdateAccount from "./pages/profile/UpdateAccount";
 import AddService from "./pages/profile/AddService";
 import Services from "./pages/profile/Services";
+import Vendors from "./pages/providers/Vendors";
+import Vendor from "./pages/providers/Vendor";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path="/" element={<div>Abs path /</div>} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
+          <Route path="vendors" element={<Vendors />} />
+          <Route path="vendor" element={<Vendor />} />
           <Route path="profile" element={<Profile />}>
             <Route path="update" element={<UpdateAccount />} />
             <Route path="services" element={<Services />} />

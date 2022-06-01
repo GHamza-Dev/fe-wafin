@@ -4,6 +4,7 @@ import userService from "../services/userService";
 const initialState = {
   client: null,
   provider: null,
+  providers: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -80,6 +81,18 @@ export const getProvider = createAsyncThunk(
   }
 );
 
+export const getAllProviders = createAsyncThunk(
+  "user/get_provider_all",
+  async (_, thunkAPI) => {
+    try {
+      return await userService.getAllProviders();
+    } catch ({ response }) {
+      const { message } = response.data;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -145,6 +158,19 @@ export const userSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.client = null;
+      })
+      .addCase(getAllProviders.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllProviders.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.providers = action.payload;
+      })
+      .addCase(getAllProviders.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.providers = null;
       });
   },
 });

@@ -5,7 +5,7 @@ import image from "../../assets/side-image.jpg";
 import Model from "../../components/hoc/Model";
 import { getUsersServices, removeService } from "../../features/serviceSlice";
 import ServiceCard from "./components/ServiceCard";
-import Loading from "../../components/Loading";
+import Loading from "../../components/hoc/Loading";
 import toast from "react-hot-toast";
 import { reset } from "../../features/serviceSlice";
 

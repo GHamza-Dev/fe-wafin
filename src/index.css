@@ -35,5 +35,9 @@
     .btn-primary{
         @apply btn bg-primary hover:bg-darken focus:bg-darken focus:ring-darken font-semibold
     } 
+
+    .wshadow{
+        @apply shadow-md shadow-gray-100 ring-gray-50
+    }
   
 }

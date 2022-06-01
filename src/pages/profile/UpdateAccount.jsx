@@ -2,7 +2,7 @@ import { TextArea } from "../../components/TextArea";
 import { useState, useEffect } from "react";
 import { Input } from "../../components/Input";
 import { Select } from "../../components/Select";
-import Loading from "../../components/Loading";
+import Loading from "../../components/hoc/Loading";
 
 import { useSelector, useDispatch } from "react-redux";
 import {

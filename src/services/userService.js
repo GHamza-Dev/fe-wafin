@@ -31,6 +31,17 @@ const getProvider = async (id, token) => {
   return response.data.data;
 };
 
+const getAllProviders = async () => {
+  let config = {
+    method: "post",
+    url: `${api}/provider/all`,
+  };
+
+  const response = await axios(config);
+
+  return response.data.data;
+};
+
 const editClient = async (client, token) => {
   let config = {
     method: "post",
@@ -82,6 +93,7 @@ const clientService = {
   editProvider,
   registerProvider,
   getProvider,
+  getAllProviders,
 };
 
 export default clientService;

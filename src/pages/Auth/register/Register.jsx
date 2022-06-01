@@ -8,7 +8,7 @@ import styles from "./Register.module.css";
 import toast from "react-hot-toast";
 
 import { Link, useNavigate } from "react-router-dom";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/hoc/Loading";
 
 function Register() {
   const dispatch = useDispatch();
