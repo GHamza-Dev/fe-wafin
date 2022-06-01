@@ -32,7 +32,7 @@ const Card = ({ id, image, price, rating, title, desc, city, buttonText }) => {
         <div className="flex justify-between">
           <Link
             state={{ id: id }}
-            to="/vendor"
+            to="/service"
             className="btn inline-block py-2 px-3 text-sm font-semibold text-white bg-darken rounded-full mt-2 opacity-90 hover:opacity-100 transition-opacity"
           >
             {buttonText}
