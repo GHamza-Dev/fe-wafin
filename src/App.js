@@ -7,10 +7,11 @@ import { Toaster } from "react-hot-toast";
 import Profile from "./pages/profile/Profile";
 import UpdateAccount from "./pages/profile/UpdateAccount";
 import AddService from "./pages/profile/AddService";
-import Services from "./pages/profile/Services";
+import PrvServices from "./pages/profile/PrvServices";
 import Vendors from "./pages/providers/Vendors";
 import Vendor from "./pages/providers/Vendor";
 import Service from "./pages/services/Service";
+import Services from "./pages/services/Services";
 
 function App() {
   return (
@@ -26,10 +27,11 @@ function App() {
           <Route path="vendor" element={<Vendor />} />
           <Route path="profile" element={<Profile />}>
             <Route path="update" element={<UpdateAccount />} />
-            <Route path="services" element={<Services />} />
+            <Route path="prvservices" element={<PrvServices />} />
             <Route path="add-service" element={<AddService />} />
           </Route>
           <Route path="service" element={<Service />} />
+          <Route path="services" element={<Services />} />
         </Routes>
       </Container>
     </BrowserRouter>

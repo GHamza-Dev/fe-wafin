@@ -9,7 +9,7 @@ import Loading from "../../components/hoc/Loading";
 import toast from "react-hot-toast";
 import { reset } from "../../features/serviceSlice";
 
-const Services = () => {
+const PrvServices = () => {
   const dispatch = useDispatch();
   const { services, isLoading, isError, message } = useSelector(
     (state) => state.service
@@ -67,4 +67,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default PrvServices;

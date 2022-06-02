@@ -7,12 +7,15 @@ import serviceService from "../../services/serviceService";
 import image1 from "../../assets/archetect.jpg";
 import Button from "../../components/Button";
 import Loading from "../../components/hoc/Loading";
+import Model from "../../components/hoc/Model";
 
 const Service = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const [service, setService] = useState(null);
+  const [opened, setOpened] = useState(false);
+
   const token = useSelector((state) => state.auth.user);
   const id = location.state.id;
 
@@ -20,11 +23,29 @@ const Service = () => {
     if (!id) navigate("/services");
     serviceService.getServiceById(id, token).then((res) => setService(res));
   }, [navigate, id, token]);
+
+  const orderHandler = () => {
+    console.log("Hello order...");
+  };
+
   if (!service) return <Loading />;
   return (
-    <div className="relative bg-white max-w-7xl w-full mx-auto mt-4">
+    <div className="relative bg-white max-w-7xl w-full mx-auto md:mt-4">
+      <Model
+        opened={opened}
+        title="Fair une demande"
+        status="success"
+        text="Cliquez sur confirmer pour compléter votre demande."
+        onConfirm={() => {
+          setOpened(false);
+          orderHandler();
+        }}
+        onCancel={() => {
+          setOpened(false);
+        }}
+      />
       <div
-        className="h-48  md:wshadow bg-no-repeat bg-cover bg-center bg-fixed rounded-md"
+        className="h-48 md:wshadow bg-no-repeat bg-cover bg-center bg-fixed rounded-md"
         style={{ background: `url(${image1})` }}
       ></div>
       <div className="flex items-center justify-center h-48 absolute top-0 w-full z-10 bg-[rgba(0,0,0,.5)] rounded-md">
@@ -36,7 +57,13 @@ const Service = () => {
             Par: {`${service?.last_name} ${service?.first_name}`}
           </h2>
           <p className="text-lg">Prix: {service?.price} Dhs</p>
-          <Button text="Fair une demande" classes="mt-1 bg-blue rounded-full" />
+          <Button
+            onClick={() => {
+              setOpened(true);
+            }}
+            text="Fair une demande"
+            classes="mt-3 bg-blue rounded-full"
+          />
         </div>
       </div>
       {/* Description */}
