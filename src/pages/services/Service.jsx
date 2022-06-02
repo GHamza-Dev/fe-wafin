@@ -3,11 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import serviceService from "../../services/serviceService";
+import orderService from "../../services/orderService";
 
 import image1 from "../../assets/archetect.jpg";
 import Button from "../../components/Button";
 import Loading from "../../components/hoc/Loading";
 import Model from "../../components/hoc/Model";
+import toast from "react-hot-toast";
 
 const Service = () => {
   const location = useLocation();
@@ -17,6 +19,7 @@ const Service = () => {
   const [opened, setOpened] = useState(false);
 
   const token = useSelector((state) => state.auth.user);
+  const client_id = useSelector((state) => state.auth.user.id);
   const id = location.state.id;
 
   useEffect(() => {
@@ -24,8 +27,10 @@ const Service = () => {
     serviceService.getServiceById(id, token).then((res) => setService(res));
   }, [navigate, id, token]);
 
-  const orderHandler = () => {
-    console.log("Hello order...");
+  const orderHandler = async (id, client_id) => {
+    let res = await orderService.addOrder({ service: id, client: client_id });
+    if (res.err) toast.error(res.message);
+    else toast.success(res.message);
   };
 
   if (!service) return <Loading />;
@@ -38,7 +43,7 @@ const Service = () => {
         text="Cliquez sur confirmer pour compléter votre demande."
         onConfirm={() => {
           setOpened(false);
-          orderHandler();
+          orderHandler(id, client_id);
         }}
         onCancel={() => {
           setOpened(false);
