@@ -16,6 +16,10 @@ const addService = async (service, token) => {
   return response.data.message;
 };
 
+const getAllServices = async () => {
+  const response = await axios.post(`${api}/service/all`);
+  return response.data.data;
+};
 const getUsersServices = async (provider, token) => {
   let config = {
     method: "post",
@@ -64,5 +68,6 @@ const serviceService = {
   getUsersServices,
   deleteService,
   getServiceById,
+  getAllServices,
 };
 export default serviceService;
