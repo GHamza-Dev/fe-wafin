@@ -13,13 +13,17 @@ function OrderCard({
   email,
   serviceId,
   acceptedAt,
+  completedAt,
   rejectedAt,
   onAccept,
   onReject,
 }) {
   let actions = null;
   let cardBg = "bg-white";
-  if (acceptedAt != null) {
+  if (completedAt) {
+    actions = <p className="text-sky-500">Completed at: {acceptedAt}</p>;
+    cardBg = "bg-sky-100";
+  } else if (acceptedAt != null) {
     actions = <p className="text-green-500">Accepted at: {acceptedAt}</p>;
     cardBg = "bg-green-100";
   } else if (rejectedAt != null) {

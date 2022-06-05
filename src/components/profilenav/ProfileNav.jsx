@@ -2,11 +2,16 @@ import { RiServiceLine } from "react-icons/ri";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { CgArrowBottomLeftR } from "react-icons/cg";
+import SubNav from "./SubNav";
 
-import To from "./Link";
+import To from "../Link";
+import { useState } from "react";
 
 function ProfileNav() {
   const size = 26;
+
+  const [subNavOpened, setSubNavOpened] = useState(false);
+
   return (
     <nav>
       <ul className="flex justify-between border px-3">
@@ -22,17 +27,21 @@ function ProfileNav() {
             <p className="text-sm">Mes services</p>
           </To>
         </li>
-        <li>
-          <To
-            to="orders"
+        <li className="relative">
+          <button
+            onClick={() => {
+              setSubNavOpened((state) => !subNavOpened);
+            }}
             className="flex flex-col p-1 items-center justify-evenly h-16 hover:bg-slate-100"
-            current="text-blue"
           >
             <span>
               <CgArrowBottomLeftR size={size} />
             </span>
             <p className="text-sm">Mes demands</p>
-          </To>
+          </button>
+          <div className="absolute  right-0 translate-x-8">
+            <SubNav opened={subNavOpened} />
+          </div>
         </li>
         <li>
           <To

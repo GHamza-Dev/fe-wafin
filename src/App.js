@@ -13,6 +13,7 @@ import Vendor from "./pages/providers/Vendor";
 import Service from "./pages/services/Service";
 import Services from "./pages/services/Services";
 import Orders from "./pages/profile/Orders";
+import ClientOrders from "./pages/profile/ClientOrders";
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
             <Route path="update" element={<UpdateAccount />} />
             <Route path="prvservices" element={<PrvServices />} />
             <Route path="add-service" element={<AddService />} />
-            <Route path="orders" element={<Orders />} />
+            <Route path="provider-orders" element={<Orders />} />
+            <Route path="client-orders" element={<ClientOrders />} />
           </Route>
           <Route path="service" element={<Service />} />
           <Route path="services" element={<Services />} />
