@@ -39,5 +39,21 @@
     .wshadow{
         @apply shadow-md shadow-gray-100 ring-gray-50
     }
+
+    .label{
+        @apply text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full;
+    }
+    .new{
+        @apply label text-red-700 bg-red-300;
+    }
+    .accepted{
+        @apply label text-sky-700 bg-sky-300;
+    }
+    .completed{
+        @apply label text-green-700 bg-green-300;
+    }
+    .rejected{
+        @apply label text-gray-700 bg-gray-300;
+    }
   
 }
