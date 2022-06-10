@@ -27,7 +27,7 @@ function Register() {
   useEffect(() => {
     if (isSuccess || user) {
       dispatch(reset());
-      navigate("/secret");
+      navigate("/services");
     }
 
     if (isError) {
