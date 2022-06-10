@@ -18,7 +18,7 @@ export function NavDropDown({ userName, hidden }) {
     <div
       className={`${
         hidden && "hidden"
-      } z-10 absolute right-0 h idden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}
+      } z-50 absolute right-0 h idden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}
     >
       <Link
         to="/profile"
