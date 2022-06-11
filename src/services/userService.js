@@ -42,6 +42,18 @@ const getAllProviders = async () => {
   return response.data.data;
 };
 
+const searchProviders = async (filters) => {
+  let config = {
+    method: "post",
+    url: `${api}/provider/search`,
+    data: JSON.stringify(filters),
+  };
+
+  const response = await axios(config);
+
+  return response.data;
+};
+
 const editClient = async (client, token) => {
   let config = {
     method: "post",
@@ -94,6 +106,7 @@ const clientService = {
   registerProvider,
   getProvider,
   getAllProviders,
+  searchProviders,
 };
 
 export default clientService;
