@@ -39,7 +39,7 @@ function Register() {
   useEffect(() => {
     if (isSuccess || user) {
       dispatch(reset());
-      navigate("/secret");
+      navigate("/vendors");
     }
 
     if (isError) {
