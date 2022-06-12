@@ -63,11 +63,30 @@ const deleteService = async (id, token) => {
   return response.data.message;
 };
 
+const searchServices = async (filters) => {
+  let config = {
+    method: "post",
+    url: `${api}/service/search`,
+    data: JSON.stringify(filters),
+  };
+
+  const response = await axios(config);
+
+  return response.data;
+};
+
+const getServiceCategories = async () => {
+  const response = await axios.post(`${api}/service/categories`);
+  return response.data.data;
+};
+
 const serviceService = {
   addService,
   getUsersServices,
   deleteService,
   getServiceById,
   getAllServices,
+  getServiceCategories,
+  searchServices,
 };
 export default serviceService;
