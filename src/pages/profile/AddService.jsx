@@ -1,43 +1,36 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addService } from "../../features/serviceSlice";
+import serviceService from "../../services/serviceService";
 
 import toast from "react-hot-toast";
 
 import { Input } from "../../components/Input";
-import { Select } from "../../components/Select";
 import { TextArea } from "../../components/TextArea";
 import Button from "../../components/Button";
 import Loading from "../../components/hoc/Loading";
 
+import cities from "../../services/citiesService";
+
 function AddService() {
   const dispatch = useDispatch();
 
-  const categories = [
-    { value: null, label: "Category" },
-    { value: 1, label: "Category - 1" },
-    { value: 2, label: "Category - 2" },
-    { value: 3, label: "Category - 3" },
-  ];
-
-  const cities = [
-    { value: null, label: "Ville" },
-    { value: 1, label: "City - 1" },
-    { value: 2, label: "City - 2" },
-  ];
+  const [categories, setCategories] = useState([]);
 
   const [formData, setFormData] = useState({
-    category_id: 1,
-    city: 1,
+    category_id: "",
+    city: "",
     title: "",
     price: "",
     description: "",
   });
 
-  const { category_id, title, price, city, description } = formData;
+  const { title, price, description } = formData;
   const { isError, message, isLoading } = useSelector((state) => state.service);
 
   useEffect(() => {
+    serviceService.getServiceCategories().then((res) => setCategories(res));
+
     if (message) {
       if (isError) toast.error(message);
       else toast.success(message);
@@ -64,25 +57,47 @@ function AddService() {
         <form onSubmit={onSubmit} className="flex-1 p-4 md:p-6 lg:p-7">
           {/* row */}
           <div className="flex gap-x-3 flex-col md:flex-row">
-            <Select
-              id="category"
-              label="Categorie"
-              opts={categories}
-              classes="basis-1/2"
-              onChange={onChange}
-              name="category_id"
-              value={category_id}
-              selected={category_id}
-            />
-            <Select
-              id="city"
-              label="Ville"
-              opts={cities}
-              classes="basis-1/2"
-              onChange={onChange}
-              name="city"
-              value={city}
-            />
+            <div className="flex flex-col my-1 grow basis-1/2">
+              <label htmlFor="category" className="text-grayish font-normal">
+                Catégorie
+              </label>
+              <select
+                onChange={onChange}
+                name="category_id"
+                className="input"
+                id="category"
+              >
+                <option value="" className="text-gray-400">
+                  Catégorie
+                </option>
+                {categories.map((cat) => (
+                  <option key={`${cat.cat_id}cat4524`} value={cat.cat_id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex flex-col my-1 grow basis-1/2">
+              <label htmlFor="city" className="text-grayish font-normal">
+                Vill
+              </label>
+              <select
+                onChange={onChange}
+                name="city"
+                className="input"
+                id="city"
+              >
+                <option value="" className="text-gray-400">
+                  Tout les villes
+                </option>
+                {cities.map((city) => (
+                  <option key={`${city.id}city4524`} value={city.name}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           {/* row */}
           <div className="flex gap-x-3 flex-col md:flex-row">
