@@ -1,42 +1,78 @@
 import { TextArea } from "../../components/TextArea";
 import { useState, useEffect } from "react";
 import { Input } from "../../components/Input";
-import { Select } from "../../components/Select";
 import Loading from "../../components/hoc/Loading";
 
 import { useSelector, useDispatch } from "react-redux";
-import {
-  reset,
-  getClient,
-  getProvider,
-  updateClient,
-  updateProvider,
-  registerProvider,
-} from "../../features/userSlice";
+import { reset, updateClient, updateProvider } from "../../features/userSlice";
+
+import userService from "../../services/userService";
 
 import { BiImageAdd } from "react-icons/bi";
 import toast from "react-hot-toast";
 
+import ProfileTop from "./components/ProfileTop";
+import cities from "../../services/citiesService";
+
 function UpdateAccount() {
   const dispatch = useDispatch();
 
-  const opts = [
-    { value: null, label: "Ville" },
-    { value: "safi1", label: "Safi - 1" },
-    { value: "safi2", label: "Safi - 2" },
-    { value: "safi3", label: "Safi - 3" },
-  ];
+  const [clientInputValues, setClientInputValues] = useState({
+    nic: "",
+    fname: "",
+    lname: "",
+    phone: "",
+    email: "",
+  });
+
+  const [providerInputValues, setProviderInputValues] = useState({
+    profession: "",
+    zipcode: "",
+    city: "",
+    address: "",
+    bio: "",
+    image: "",
+  });
+
+  const { nic, fname, lname, phone, email } = clientInputValues || {};
+
+  const { profession, zipcode, address, bio, image } =
+    providerInputValues || {};
+
+  const onClientChange = (e) => {
+    setClientInputValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onProviderChange = (e) => {
+    setProviderInputValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   let { isError, message, isLoading } = useSelector((state) => state.user);
   let role = useSelector((state) => state.auth.user.role);
-  let client = useSelector((state) => state.user.client);
-  let provider = useSelector((state) => state.user.provider);
+  let id = useSelector((state) => state.auth.user.id);
+  let token = useSelector((state) => state.auth.user.token);
 
   useEffect(() => {
-    dispatch(getClient());
+    userService.getClient({ id, token }).then((res) => {
+      setClientInputValues({
+        nic: res.nic,
+        phone: res.phone,
+        email: res.email,
+        fname: res.first_name,
+        lname: res.last_name,
+      });
+    });
 
     if (role === "provider") {
-      dispatch(getProvider());
+      userService.getProvider({ id, token }).then((res) => {
+        setProviderInputValues(res);
+      });
     }
 
     if (message) {
@@ -44,61 +80,22 @@ function UpdateAccount() {
       else toast.success(message);
     }
     dispatch(reset());
-  }, [message, isError, isLoading, role, dispatch]);
-
-  let [nic, setNic] = useState(client?.nic);
-  let [fname, setFname] = useState(client?.first_name);
-  let [lname, setLname] = useState(client?.last_name);
-  let [phone, setPhone] = useState(client?.phone);
-  let [email, setEmail] = useState(client?.email);
-  let [profession, setProfession] = useState(provider?.profession);
-  let [zipcode, setZipcode] = useState(provider?.zipcode);
-  let [address, setAddress] = useState(provider?.address);
-  let [bio, setBio] = useState(provider?.bio);
-  let [image, setImage] = useState(provider?.image);
+  }, [message, isError, isLoading, role, id, token, dispatch]);
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(
-      updateClient({
-        fname: fname,
-        lname: lname,
-        email: email,
-        phone: phone,
-        nic: nic,
-      })
-    );
+    dispatch(updateClient(clientInputValues));
 
     if (role === "provider") {
-      dispatch(
-        updateProvider({
-          profession: profession,
-          zipcode: zipcode,
-          address: address,
-          bio: bio,
-        })
-      );
-    }
-
-    if (role !== "provider") {
-      dispatch(
-        registerProvider({
-          profession: profession,
-          zipcode: zipcode,
-          address: address,
-          bio: bio,
-        })
-      );
+      dispatch(updateProvider(providerInputValues));
     }
   };
 
   return (
     <div className="w-10/12 max-w-x mx-auto mb-4">
       {isLoading && <Loading />}
-      <h2 className="my-7 font-bold text-darken text-2xl">
-        {role === "client" ? "Devenir vendeur" : "Mettre à jour le profil"}
-      </h2>
+      <ProfileTop title="Mettre à jour le profil" role={role} />
       <div className="flex border rounded-lg overflow-hidden bg-white">
         <form onSubmit={onSubmit} className="flex-1 p-4 md:p-6 lg:p-7">
           {/* input group */}
@@ -107,7 +104,7 @@ function UpdateAccount() {
             id="nic"
             type="text"
             holder="Entre votre cnie"
-            onChange={(e) => setNic(e.target.value)}
+            onChange={onClientChange}
             value={nic}
             name="nic"
             required={true}
@@ -120,7 +117,7 @@ function UpdateAccount() {
               type="text"
               holder="Entre votre nom"
               classes="grow"
-              onChange={(e) => setFname(e.target.value)}
+              onChange={onClientChange}
               value={fname}
               name="fname"
               required={true}
@@ -131,7 +128,7 @@ function UpdateAccount() {
               type="text"
               holder="Entre votre prénom"
               classes="grow"
-              onChange={(e) => setLname(e.target.value)}
+              onChange={onClientChange}
               value={lname}
               name="lname"
               required={true}
@@ -139,22 +136,11 @@ function UpdateAccount() {
           </div>
           {/* input group */}
           <Input
-            label="Profession"
-            id="profession"
-            type="text"
-            holder="Entre votre profession"
-            onChange={(e) => setProfession(e.target.value)}
-            value={profession}
-            name="profession"
-            required={true}
-          />
-          {/* input group */}
-          <Input
             label="Email"
             id="email"
             type="email"
             holder="Entre votre email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={onClientChange}
             value={email}
             name="email"
             required={true}
@@ -164,79 +150,120 @@ function UpdateAccount() {
             id="phone"
             type="tel"
             holder="Entre votre num de télephone"
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={onClientChange}
             value={phone}
             name="phone"
             required={true}
           />
-          <div className="my-5 mt-7 h-2 bg-slate-200 rounded-lg relative">
-            <div className="absolute w-5 h-5 rounded-full -translate-x-1/2 left-1/2 top-1/2 -translate-y-1/2 bg-slate-400"></div>
-          </div>
-          {/* row */}
-          <div className="flex gap-x-3 flex-col md:flex-row">
-            <Select label="Vile" id="city" opts={opts} required={true} />
-            <Input
-              label="Code postal"
-              id="zipcode"
-              type="number"
-              holder="Entre votre code postal"
-              classes="grow"
-              onChange={(e) => setZipcode(e.target.value)}
-              value={zipcode}
-              name="zipcode"
-              required={true}
-            />
-          </div>
-          {/* input group */}
-          <Input
-            label="Address"
-            id="address"
-            type="text"
-            holder="Entre votre address"
-            onChange={(e) => setAddress(e.target.value)}
-            value={address}
-            name="address"
-            required={true}
-          />
 
-          <TextArea
-            label="Bio"
-            id="bio"
-            holder="Je suis professeur, entraîneur, et un homme aimé."
-            onChange={(e) => setBio(e.target.value)}
-            value={bio}
-            name="bio"
-            required={true}
-          />
-          {/* upload image */}
-          <div className="hidden flex-col justify-center items-center w-full">
-            <p className="self-start text-grayish font-medium my-1">Image</p>
-            <label
-              htmlFor="dropzone-file"
-              className="flex flex-col justify-center items-center w-full bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-            >
-              <div className="flex flex-col justify-center items-center pt-5 pb-6">
-                <BiImageAdd size={35} color="#ccd" />
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">
-                    Cliquez pour télécharger
-                  </span>{" "}
-                  ou glisser-déposer
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  SVG, PNG, JPG or GIF (MAX. 800x400px)
-                </p>
+          {role === "provider" && (
+            <>
+              <div className="my-5 mt-7 border-dashed border-gray-400 border rounded-lg relative"></div>
+              {/* row */}
+              <div className="flex gap-x-3 flex-col md:flex-row">
+                <div className="flex flex-col my-1 grow basis-1/2">
+                  <label htmlFor="city" className="text-grayish font-normal">
+                    Ville
+                  </label>
+                  <select
+                    onChange={onProviderChange}
+                    name="city"
+                    className="input"
+                    id="city"
+                  >
+                    <option value="" className="text-gray-400">
+                      Choiser une ville
+                    </option>
+                    {cities.map((city) => (
+                      <option key={`${city.id}city4524`} value={city.name}>
+                        {city.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <Input
+                  label="Code postal"
+                  id="zipcode"
+                  type="number"
+                  holder="Entre votre code postal"
+                  classes="grow"
+                  onChange={onProviderChange}
+                  value={zipcode}
+                  name="zipcode"
+                  required={true}
+                />
               </div>
-              <input
-                name="image"
-                id="dropzone-file"
-                type="file"
-                className="hidden"
-                value={image}
-                onChange={(e) => setImage(e.value)}
+              {/* row */}
+              <div className="flex gap-x-3 flex-col md:flex-row">
+                {/* input group */}
+                <Input
+                  label="Address"
+                  id="address"
+                  type="text"
+                  holder="Entre votre address"
+                  classes="grow"
+                  onChange={onProviderChange}
+                  value={address}
+                  name="address"
+                  required={true}
+                />
+
+                {/* input group */}
+                <Input
+                  label="Profession"
+                  id="profession"
+                  type="text"
+                  holder="Entre votre profession"
+                  classes="grow"
+                  onChange={onProviderChange}
+                  value={profession}
+                  name="profession"
+                  required={true}
+                />
+              </div>
+
+              <TextArea
+                label="Bio"
+                id="bio"
+                holder="Je suis professeur, entraîneur, et un homme aimé."
+                onChange={onProviderChange}
+                value={bio}
+                name="bio"
+                required={true}
               />
-            </label>
-          </div>
+              {/* upload image */}
+              <div className="hidden flex-col justify-center items-center w-full">
+                <p className="self-start text-grayish font-medium my-1">
+                  Image
+                </p>
+                <label
+                  htmlFor="dropzone-file"
+                  className="flex flex-col justify-center items-center w-full bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                >
+                  <div className="flex flex-col justify-center items-center pt-5 pb-6">
+                    <BiImageAdd size={35} color="#ccd" />
+                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                      <span className="font-semibold">
+                        Cliquez pour télécharger
+                      </span>{" "}
+                      ou glisser-déposer
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      SVG, PNG, JPG or GIF (MAX. 800x400px)
+                    </p>
+                  </div>
+                  <input
+                    name="image"
+                    id="dropzone-file"
+                    type="file"
+                    className="hidden"
+                    value={image}
+                    onChange={onProviderChange}
+                  />
+                </label>
+              </div>
+            </>
+          )}
           <div className="flex justify-end mt-5">
             <button className="btn-primary bg-darken hover:bg-primary rounded-md">
               Confirmer

@@ -21,7 +21,7 @@ export function NavDropDown({ userName, hidden }) {
       } z-50 absolute right-0 h idden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}
     >
       <Link
-        to="/profile"
+        to="/profile/update"
         className="flex items-center just px-4 py-3 text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
       >
         <FaUserCog size={22} />

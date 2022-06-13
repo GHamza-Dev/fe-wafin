@@ -14,6 +14,7 @@ import Service from "./pages/services/Service";
 import Services from "./pages/services/Services";
 import Orders from "./pages/profile/Orders";
 import ClientOrders from "./pages/profile/ClientOrders";
+import PrvRegister from "./pages/profile/PrvRegister";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="vendors" element={<Vendors />} />
           <Route path="vendor" element={<Vendor />} />
           <Route path="profile" element={<Profile />}>
+            <Route path="register-provider" element={<PrvRegister />} />
             <Route path="update" element={<UpdateAccount />} />
             <Route path="prvservices" element={<PrvServices />} />
             <Route path="add-service" element={<AddService />} />

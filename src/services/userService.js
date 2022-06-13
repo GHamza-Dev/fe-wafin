@@ -85,6 +85,7 @@ const editProvider = async (provider, token) => {
 };
 
 const registerProvider = async (provider, token) => {
+  console.log(provider);
   let config = {
     method: "post",
     url: `${api}/provider/register`,
@@ -96,7 +97,11 @@ const registerProvider = async (provider, token) => {
 
   const response = await axios(config);
 
-  return response.data.message;
+  if (response.data.data) {
+    localStorage.setItem("user", JSON.stringify(response.data.data));
+  }
+  console.log(response.data);
+  return response.data.data;
 };
 
 const clientService = {
