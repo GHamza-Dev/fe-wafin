@@ -13,8 +13,8 @@ function ProfileNav() {
   const [subNavOpened, setSubNavOpened] = useState(false);
 
   return (
-    <nav>
-      <ul className="flex justify-between border px-3">
+    <nav className="md:h-screen">
+      <ul className="flex justify-between border px-3 md:flex-col md:h-screen md:justify-start md:border-0 md:bg-white w-36">
         <li>
           <To
             to="prvservices"
@@ -27,7 +27,7 @@ function ProfileNav() {
             <p className="text-sm">Mes services</p>
           </To>
         </li>
-        <li className="relative">
+        <li className="md:mt-7 relative">
           <button
             onClick={() => {
               setSubNavOpened((state) => !subNavOpened);
@@ -43,7 +43,7 @@ function ProfileNav() {
             <SubNav opened={subNavOpened} />
           </div>
         </li>
-        <li>
+        <li className="md:mt-7">
           <To
             to="add-service"
             className="flex flex-col p-1 items-center justify-evenly h-16 hover:bg-slate-100"
@@ -55,7 +55,7 @@ function ProfileNav() {
             <p className="text-sm text-center">Déposer</p>
           </To>
         </li>
-        <li>
+        <li className="md:mt-7">
           <To
             to="update"
             className="flex flex-col p-1 items-center justify-evenly h-16 hover:bg-slate-100"

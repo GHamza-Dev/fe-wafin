@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import ProfileNav from "../../components/profilenav/ProfileNav";
 function Profile() {
   return (
-    <div>
+    <div className="md:flex">
       <ProfileNav />
       <Outlet />
     </div>

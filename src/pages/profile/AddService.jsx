@@ -11,6 +11,7 @@ import Button from "../../components/Button";
 import Loading from "../../components/hoc/Loading";
 
 import cities from "../../services/citiesService";
+import Wrapper4XL from "../../components/hoc/Wrapper4XL";
 
 function AddService() {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ function AddService() {
   };
 
   return (
-    <div className="w-10/12 max-w-x mx-auto mb-4">
+    <Wrapper4XL classes="mb-4">
       {isLoading && <Loading />}
       <h2 className="my-7 font-bold text-darken text-2xl">Nouveau Service</h2>
       <div className="border rounded-lg overflow-hidden bg-white">
@@ -138,7 +139,7 @@ function AddService() {
           </div>
         </form>
       </div>
-    </div>
+    </Wrapper4XL>
   );
 }
 

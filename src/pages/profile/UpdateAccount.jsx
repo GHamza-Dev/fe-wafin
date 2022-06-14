@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 
 import ProfileTop from "./components/ProfileTop";
 import cities from "../../services/citiesService";
+import Wrapper4XL from "../../components/hoc/Wrapper4XL";
 
 function UpdateAccount() {
   const dispatch = useDispatch();
@@ -93,7 +94,7 @@ function UpdateAccount() {
   };
 
   return (
-    <div className="w-10/12 max-w-x mx-auto mb-4">
+    <Wrapper4XL classes="mb-4">
       {isLoading && <Loading />}
       <ProfileTop title="Mettre à jour le profil" role={role} />
       <div className="flex border rounded-lg overflow-hidden bg-white">
@@ -271,7 +272,7 @@ function UpdateAccount() {
           </div>
         </form>
       </div>
-    </div>
+    </Wrapper4XL>
   );
 }
 
