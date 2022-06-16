@@ -21,7 +21,7 @@ function OrderCard({
   let actions = null;
   let cardBg = "bg-white";
   if (completedAt) {
-    actions = <p className="text-sky-500">Completed at: {acceptedAt}</p>;
+    actions = <p className="text-sky-500">Completed at: {completedAt}</p>;
     cardBg = "bg-sky-100";
   } else if (acceptedAt != null) {
     actions = <p className="text-green-500">Accepted at: {acceptedAt}</p>;
