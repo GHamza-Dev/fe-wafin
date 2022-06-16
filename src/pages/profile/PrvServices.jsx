@@ -54,7 +54,10 @@ const PrvServices = () => {
         title="Supprimer le service"
         status="danger"
         text="Voulez-vous vraiment supprimer votre service ?"
-        onConfirm={deleteHandler}
+        onConfirm={() => {
+          deleteHandler();
+          setOpened(false);
+        }}
         onCancel={() => {
           setOpened(false);
         }}
