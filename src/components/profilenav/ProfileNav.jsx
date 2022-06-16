@@ -14,7 +14,7 @@ function ProfileNav() {
 
   return (
     <nav className="md:h-screen">
-      <ul className="flex justify-between border px-3 md:flex-col md:h-screen md:justify-start md:border-0 md:bg-white w-36">
+      <ul className="flex justify-between border px-3 md:flex-col md:h-screen md:justify-start md:border-0 md:bg-white md:w-36">
         <li>
           <To
             to="prvservices"
