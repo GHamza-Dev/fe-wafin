@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addService } from "../../features/serviceSlice";
+import { addService, reset } from "../../features/serviceSlice";
 import serviceService from "../../services/serviceService";
 
 import toast from "react-hot-toast";
@@ -36,7 +36,8 @@ function AddService() {
       if (isError) toast.error(message);
       else toast.success(message);
     }
-  }, [isError, message]);
+    dispatch(reset());
+  }, [isError, message, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
