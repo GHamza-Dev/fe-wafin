@@ -40,7 +40,12 @@ function ProfileNav() {
             <p className="text-sm">Mes demands</p>
           </button>
           <div className="absolute  right-0 translate-x-8">
-            <SubNav opened={subNavOpened} />
+            <SubNav
+              opened={subNavOpened}
+              onLinkClick={() => {
+                setSubNavOpened(false);
+              }}
+            />
           </div>
         </li>
         <li className="md:mt-7">
