@@ -13,6 +13,7 @@ import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
 
 import clientService from "../../services/userService";
+import cities from "../../services/citiesService";
 
 const images = [image1, image2, image3, image4, image5];
 
@@ -82,11 +83,12 @@ const Vendors = () => {
               </div>
               <div className="flex-1">
                 <select className="input" name="city" onChange={onFilterChange}>
-                  <option value="">Ville</option>
-                  <option value="1">Safi</option>
-                  <option value="2">Marakkech</option>
-                  <option value="3">Salé</option>
-                  <option value="4">Titouane</option>
+                  <option value="all">Ville</option>
+                  {cities.map((city) => (
+                    <option key={`city982${city.id}`} value={city.name}>
+                      {city.name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
