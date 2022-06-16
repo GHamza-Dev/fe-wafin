@@ -19,7 +19,8 @@ const Service = () => {
   const [opened, setOpened] = useState(false);
 
   const token = useSelector((state) => state.auth.user);
-  const client_id = useSelector((state) => state.auth.user.id);
+  const client_id = useSelector((state) => state?.auth?.user?.id);
+  console.log(client_id);
   const id = location.state.id;
 
   useEffect(() => {
@@ -28,6 +29,8 @@ const Service = () => {
   }, [navigate, id, token]);
 
   const orderHandler = async (id, client_id) => {
+    if (!client_id) return navigate("/login");
+
     let res = await orderService.addOrder({ service: id, client: client_id });
     if (res.err) toast.error(res.message);
     else toast.success(res.message);
