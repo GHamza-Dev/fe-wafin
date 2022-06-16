@@ -2,7 +2,7 @@ import { IoLocationSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import Rating from "../../../components/chunks/Rating";
 
-const ProviderCard = ({ id, image, fullname, profession, bio, city }) => {
+const ProviderCard = ({ id, image, fullname, profession, bio, city, rate }) => {
   return (
     <div className="overflow-hidden wshadow rounded-md">
       {/* card image */}
@@ -17,7 +17,7 @@ const ProviderCard = ({ id, image, fullname, profession, bio, city }) => {
             <h3 className="font-semibold text-xl text-darken max-w-[90ch] text-ellipsis overflow-hidden whitespace-nowrap">
               {fullname}
             </h3>
-            <Rating stars={4} />
+            <Rating stars={rate} />
           </div>
           <h3 className="font-light text-grayish">{profession}</h3>
         </div>

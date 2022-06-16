@@ -37,7 +37,7 @@ const Vendors = () => {
   const onSearchSubmit = (e) => {
     e.preventDefault();
 
-    if (!filterInputs.city && !profession && !last_name) return; 
+    if (!filterInputs.city && !profession && !last_name) return;
 
     clientService
       .searchProviders(filterInputs)
@@ -114,6 +114,7 @@ const Vendors = () => {
               bio={pr.bio}
               city={pr.city}
               profession={pr.profession}
+              rate={pr.stars}
             />
           ))}
       </div>

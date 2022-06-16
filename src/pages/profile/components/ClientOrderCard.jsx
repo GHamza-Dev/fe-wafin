@@ -2,6 +2,7 @@ import { BiTime, BiTask } from "react-icons/bi";
 import Button from "../../../components/Button";
 import { Link } from "react-router-dom";
 import { CgArrowRight } from "react-icons/cg";
+import { BsStarHalf } from "react-icons/bs";
 
 function ClientOrderCard({
   title,
@@ -12,6 +13,8 @@ function ClientOrderCard({
   completedAt,
   rejectedAt,
   onComplete,
+  rateId,
+  onRate,
 }) {
   let statusBg = "bg-gray-400";
   let statusText = "Waiting...";
@@ -28,7 +31,7 @@ function ClientOrderCard({
   }
 
   return (
-    <div className={`border border-gray-300 p-3 relative rounded-sm`}>
+    <div className={`border border-gray-300 p-3 pb-0 relative rounded-sm`}>
       <h2 className="flex items-center">
         <BiTask color="orange" size={26} />
         <Link to="/service" state={{ id: serviceId }}>
@@ -48,17 +51,26 @@ function ClientOrderCard({
         </li>
       </ul>
       <hr />
-      <div className="mt-3 flex items-center justify-between">
+      <div className="my-2 flex items-center justify-between">
         {completedAt === null && (
           <Button text="Complété" onClick={onComplete} />
         )}
         <Link
-          className="flex items-center text-blue"
+          className="flex items-center text-blue py-2"
           to="/vendor"
           state={{ id: providerId }}
         >
           <span>Vendeur</span> <CgArrowRight size={22} />
         </Link>
+        {rateId ? (
+          <button className="border rounded-full border-primary">
+            <BsStarHalf size={24} color="orange" />
+          </button>
+        ) : (
+          <button onClick={onRate} className="border rounded-full">
+            <BsStarHalf color="gray" size={24} />
+          </button>
+        )}
       </div>
     </div>
   );
