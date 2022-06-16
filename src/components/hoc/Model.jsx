@@ -38,6 +38,7 @@ const Model = ({
         initialFocus={cancelButtonRef}
         onClose={() => {
           setOpen(false);
+          onCancel();
         }}
       >
         <Transition.Child

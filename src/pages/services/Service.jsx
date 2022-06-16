@@ -20,7 +20,6 @@ const Service = () => {
 
   const token = useSelector((state) => state.auth.user);
   const client_id = useSelector((state) => state?.auth?.user?.id);
-  console.log(client_id);
   const id = location.state.id;
 
   useEffect(() => {
