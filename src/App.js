@@ -15,6 +15,7 @@ import Services from "./pages/services/Services";
 import Orders from "./pages/profile/Orders";
 import ClientOrders from "./pages/profile/ClientOrders";
 import PrvRegister from "./pages/profile/PrvRegister";
+import NotFound from "./pages/404";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <NavBar />
       <Container>
         <Routes>
+          <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Vendors />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
