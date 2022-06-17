@@ -15,7 +15,8 @@ import Services from "./pages/services/Services";
 import Orders from "./pages/profile/Orders";
 import ClientOrders from "./pages/profile/ClientOrders";
 import PrvRegister from "./pages/profile/PrvRegister";
-import NotFound from "./pages/404";
+import NotFound from "./pages/static/404";
+import Footer from "./pages/static/footer/Footer";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="service" element={<Service />} />
           <Route path="services" element={<Services />} />
         </Routes>
+        <Footer />
       </Container>
     </BrowserRouter>
   );

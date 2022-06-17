@@ -5,6 +5,7 @@ import { BiUserCircle } from "react-icons/bi";
 import { useState } from "react";
 import { CgMenuRightAlt } from "react-icons/cg";
 import { GrClose } from "react-icons/gr";
+import Logo from "./logo/Logo";
 
 export function NavBar() {
   const { user } = useSelector((state) => state.auth);
@@ -23,11 +24,8 @@ export function NavBar() {
   return (
     <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 shadow-md shadow-gray-50 border-b border-b-slate-100">
       <div className="flex flex-wrap justify-between items-center mx-auto">
-        <div className="logo">
-          <h1 className="font-bold text-2xl">
-            <span className="text-darken">wa</span>
-            <span className="text-primary">Fin</span>
-          </h1>
+        <div>
+          <Logo />
         </div>
         <button
           data-collapse-toggle="mobile-menu"
