@@ -37,7 +37,7 @@ function UpdateAccount() {
 
   const { nic, fname, lname, phone, email } = clientInputValues || {};
 
-  const { profession, zipcode, address, bio, image } =
+  const { profession, zipcode, address, bio, image, city } =
     providerInputValues || {};
 
   const onClientChange = (e) => {
@@ -171,6 +171,7 @@ function UpdateAccount() {
                     name="city"
                     className="input"
                     id="city"
+                    value={city}
                   >
                     <option value="" className="text-gray-400">
                       Choiser une ville
