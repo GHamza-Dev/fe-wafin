@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 import ProfileTop from "./components/ProfileTop";
 import cities from "../../services/citiesService";
+import Wrapper4XL from "../../components/hoc/Wrapper4XL";
 
 function PrvRegister() {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ function PrvRegister() {
   };
 
   return (
-    <div className="w-10/12 max-w-x mx-auto mb-4">
+    <Wrapper4XL classes="mb-4">
       {isLoading && <Loading />}
       <ProfileTop title="Devenir vendeur" role={role} />
       <div className="flex border rounded-lg overflow-hidden bg-white">
@@ -172,7 +173,7 @@ function PrvRegister() {
           </div>
         </form>
       </div>
-    </div>
+    </Wrapper4XL>
   );
 }
 
